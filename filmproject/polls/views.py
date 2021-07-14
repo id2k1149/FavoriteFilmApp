@@ -1,3 +1,5 @@
+from time import strptime
+
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
@@ -9,14 +11,15 @@ import datetime
 # Create your views here.
 class IndexView(ListView):
     template_name = 'polls/index.html'
-    context_object_name = 'latest_questions_list'
+    context_object_name = 'we_have_questions'
 
     def get_queryset(self):
         # """Return sorted questions"""
         # questions = Question.objects.order_by('-date_published')
         """Return filtered questions"""
-        questions = Question.objects.filter(date_published__date=datetime.date.today())
-        return questions
+        if datetime.datetime.now().hour < 11:
+            questions = Question.objects.filter(date_published__date=datetime.date.today())
+            return questions
 
 
 class QuestionDetailView(DetailView):
@@ -53,3 +56,11 @@ def vote(request, poll_id):
 class ResultsView(DetailView):
     model = Question
     template_name = 'polls/results.html'
+
+    def get_queryset(self):
+        results = Question.objects.all()
+        return results
+
+
+def result(request, poll_id):
+    return HttpResponseRedirect(reverse('polls:results'))

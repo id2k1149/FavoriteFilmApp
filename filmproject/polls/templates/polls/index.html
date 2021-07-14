@@ -1,7 +1,7 @@
 <h1>Последние опросы</h1>
-{% if latest_questions_list %}
+{% if we_have_questions %}
     <ul>
-        {% for question in latest_questions_list %}
+        {% for question in we_have_questions %}
             <li>
                 <a href="{% url 'polls:detail' pk=question.id %}">
                 {{ question.title }} {{ question.date_published }}
