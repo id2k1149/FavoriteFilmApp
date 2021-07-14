@@ -14,3 +14,7 @@ https://djangosimple.blogspot.com/2012/02/32.html
 https://djangosimple.blogspot.com/2012/02/4.html
 
 https://djangosimple.blogspot.com/2014/05/5.html
+
+https://djangosimple.blogspot.com/2014/05/6.html
+
+https://djangosimple.blogspot.com/2014/05/7.html
