@@ -27,8 +27,6 @@ class QuestionAdmin(admin.ModelAdmin):
     inlines = [AnswerInline]
 
     # неактивный опрос отображать не будем
-    list_display = ('title', 'date_published', 'is_active')
-
     # Добавим название метода модели is_popular()
     list_display = ('title', 'date_published', 'is_active', 'is_popular')
 
