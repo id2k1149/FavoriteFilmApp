@@ -14,8 +14,8 @@ class IndexView(ListView):
     def get_queryset(self):
         """Return filtered questions"""
         if datetime.datetime.now().hour < 23:
-            questions = Question.objects\
-                .filter(date_published__date=datetime.date.today())\
+            questions = Question.objects \
+                .filter(date_published__date=datetime.date.today()) \
                 .order_by('-date_published')
             return questions
 
@@ -42,7 +42,8 @@ def vote(request, poll_id):
                 })
             selected_answer.votes += 1
             selected_answer.save()
-            return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
+            # return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
+            return HttpResponseRedirect(reverse('polls:best', args=(question.id,)))
         else:
             return render(request, 'polls/detail.html', {
                 'question': question,
@@ -53,3 +54,13 @@ def vote(request, poll_id):
 class ResultsView(DetailView):
     model = Question
     template_name = 'polls/results.html'
+
+
+def best_result(request, question_id):
+    question = get_object_or_404(Question, id=question_id)
+    max_votes_answer = question.answer_set.order_by('-votes').first()
+
+    return render(request, 'polls/best.html', {
+                'question': question,
+                'max_votes_answer': max_votes_answer,
+            })
