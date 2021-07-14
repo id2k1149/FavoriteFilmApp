@@ -3,6 +3,7 @@ from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.views.generic import ListView, DetailView
 from .models import Question, Answer
+import datetime
 
 
 # Create your views here.
@@ -11,8 +12,11 @@ class IndexView(ListView):
     context_object_name = 'latest_questions_list'
 
     def get_queryset(self):
-        """Вернуть 2 последних свежих опроса"""
-        return Question.objects.order_by('-date_published')[:2]
+        # """Return sorted questions"""
+        # questions = Question.objects.order_by('-date_published')
+        """Return filtered questions"""
+        questions = Question.objects.filter(date_published__date=datetime.date.today())
+        return questions
 
 
 class QuestionDetailView(DetailView):

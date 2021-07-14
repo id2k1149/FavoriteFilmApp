@@ -42,5 +42,5 @@ class QuestionAdmin(admin.ModelAdmin):
 
 
 # Register your models here.
-# Модель Answer импортировать не нужно, т.к. она связана с Question через внешний ключ.
 admin.site.register(Question, QuestionAdmin)
+admin.site.register(Answer)

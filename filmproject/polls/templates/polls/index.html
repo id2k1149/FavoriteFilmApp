@@ -2,7 +2,11 @@
 {% if latest_questions_list %}
     <ul>
         {% for question in latest_questions_list %}
-            <li>{{ question.title }}</li>
+            <li>
+                <a href="{% url 'polls:detail' pk=question.id %}">
+                {{ question.title }} {{ question.date_published }}
+                </a>
+            </li>
         {% endfor %}
     </ul>
 {% else %}

@@ -37,7 +37,7 @@ class Answer(models.Model):
     answer = models.CharField(max_length=200, verbose_name="Ответ")
     votes = models.IntegerField(verbose_name="Голосов", default=0)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.answer
 
     class Meta:
