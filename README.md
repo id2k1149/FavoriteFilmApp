@@ -1,10 +1,16 @@
 # FavoriteFilmApp
 Django ORM
 
-inspired by 
+with a little help from
 
 https://djangosimple.blogspot.com/2012/02/1.html
 
 https://djangosimple.blogspot.com/2012/02/2.html
 
 https://djangosimple.blogspot.com/2012/02/31.html
+
+https://djangosimple.blogspot.com/2012/02/32.html
+
+https://djangosimple.blogspot.com/2012/02/4.html
+
+https://djangosimple.blogspot.com/2014/05/5.html

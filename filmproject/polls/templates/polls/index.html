@@ -1,0 +1,10 @@
+<h1>Последние опросы</h1>
+{% if latest_questions_list %}
+    <ul>
+        {% for question in latest_questions_list %}
+            <li>{{ question.title }}</li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>Опросы не найдены.</p>
+{% endif %}
