@@ -7,7 +7,7 @@ from polls import settings
 # Create your models here.
 class Question(models.Model):
     """Вопрос"""
-    title = models.CharField(max_length=200, verbose_name="Вопрос")
+    title = models.CharField(max_length=128, verbose_name="Вопрос")
     date_published = models.DateTimeField(verbose_name="Дата публикации",
                                           default=datetime.datetime.now())
     is_active = models.BooleanField(verbose_name="Опубликован")
@@ -34,7 +34,7 @@ class Question(models.Model):
 class Answer(models.Model):
     """Вариант ответа на вопрос"""
     question_id = models.ForeignKey(Question, on_delete=models.CASCADE)
-    answer = models.CharField(max_length=200, verbose_name="Ответ")
+    answer = models.CharField(max_length=64, verbose_name="Ответ")
     votes = models.IntegerField(verbose_name="Голосов", default=0)
 
     def __str__(self):
@@ -43,3 +43,12 @@ class Answer(models.Model):
     class Meta:
         verbose_name = 'Ответ'
         verbose_name_plural = 'Ответы'
+
+
+class Description(models.Model):
+    answer_id = models.ForeignKey(Answer, on_delete=models.CASCADE)
+    string_desc = models.CharField(max_length=32, unique=False)
+    digital_desc = models.DecimalField(decimal_places=2, default=0, max_digits=5)
+
+    def __str__(self):
+        return self.string_desc

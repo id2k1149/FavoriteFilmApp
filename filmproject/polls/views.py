@@ -20,9 +20,19 @@ class IndexView(ListView):
             return questions
 
 
-class QuestionDetailView(DetailView):
-    model = Question
-    template_name = 'polls/detail.html'
+# class QuestionDetailView(DetailView):
+#     model = Question
+#     template_name = 'polls/detail.html'
+
+def question_detail_view(request, pk):
+    question = get_object_or_404(Question, id=pk)
+    max_votes_answer = question.answer_set.order_by('-votes').first()
+
+    return render(request, 'polls/each_question.html', {
+        'question': question,
+        'max_votes_answer': max_votes_answer,
+    })
+
 
 
 def vote(request, poll_id):
