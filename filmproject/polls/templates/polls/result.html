@@ -1,9 +1,0 @@
-<a href="{% url 'polls:index' %}">Home</a>
-<h1>{{ question.title }}</h1>
-<ul>
-{% for answer in question.answer_set.all|dictsortreversed:"votes" %}
-    <li>{{ answer.answer }} - votes: {{ answer.votes }}</li>
-{% endfor %}
-</ul>
-
-<a href="{% url 'polls:detail' question.id %}">Vote again</a>

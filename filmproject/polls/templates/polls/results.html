@@ -1,4 +1,4 @@
-<a href="{% url 'polls:index' %}">Home</a>
+<a href="/">Home</a>
 <h1>{{ question.title }}</h1>
 <ul>
 {% for answer in question.answer_set.all|dictsortreversed:"votes" %}

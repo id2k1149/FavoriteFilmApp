@@ -1,3 +1,4 @@
+<a href="/">Home</a>
 {% if question.is_active %}
 
     <h1>{{ question.title }}</h1>
@@ -10,19 +11,16 @@
         {% for answer in question.answer_set.all %}
             <input type="radio"
                    name="answer"
-                   id="answer{{ forloop.counter }}"
                    value="{{ answer.id }}" />
-            <label for="answer{{ forloop.counter }}">
                 {{ answer.answer }}
                 <br>
-            </label>
-
         {% endfor %}
-        <input type="submit" value="Голосовать" />
+         <br>
+        <input type="submit" value="Vote" />
     </form>
 
 {% else %}
-    <p>Извините, опрос снят с публикации.</p>
+    <p>Sorry, this question is not actual now</p>
 {% endif %}
 
 

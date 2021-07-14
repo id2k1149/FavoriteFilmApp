@@ -1,14 +1,16 @@
-<h1>Последние опросы</h1>
 {% if we_have_questions %}
+<h1>We have questions</h1>
     <ul>
         {% for question in we_have_questions %}
             <li>
                 <a href="{% url 'polls:detail' pk=question.id %}">
-                {{ question.title }} {{ question.date_published }}
+                {{ question.title }}
                 </a>
             </li>
         {% endfor %}
     </ul>
 {% else %}
-    <p>Опросы не найдены.</p>
+    <p>
+        <h1>Sorry, no more questions for today</h1>
+    </p>
 {% endif %}
