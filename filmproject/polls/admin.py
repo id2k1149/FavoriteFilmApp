@@ -25,8 +25,22 @@ class QuestionAdmin(admin.ModelAdmin):
          ),
     ]
     inlines = [AnswerInline]
+
     # неактивный опрос отображать не будем
     list_display = ('title', 'date_published', 'is_active')
+
+    # Добавим название метода модели is_popular()
+    list_display = ('title', 'date_published', 'is_active', 'is_popular')
+
+    # в админке добавить фильтр по дате
+    list_filter = ['date_published']
+
+    # Добавим форму поиска по формулировкам вопросов
+    search_fields = ['title']
+
+    # Добавим в админку иерархию по дате: год, месяц…
+    # нужно установить питоновский пакет pytz (PYthon TimeZone).
+    # date_hierarchy = ['date_published']
 
 
 # Register your models here.

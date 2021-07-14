@@ -1,6 +1,7 @@
 from django.db import models
 import datetime
-from django.db import models
+# Импортируем настройки приложения polls
+from polls import settings
 
 
 # Create your models here.
@@ -17,6 +18,17 @@ class Question(models.Model):
     class Meta:
         verbose_name = 'Вопрос'
         verbose_name_plural = 'Вопросы'
+
+    # Этот метод позволяет выявить Популярный опрос для показа в админке
+    def is_popular(self):
+        answers = Answer.objects.filter(question_id=self.id)
+        votes_total = sum([answer.votes for answer in answers])
+        return votes_total > settings.POLLS_POPULAR_VOTES_LIMIT
+
+    # Описание столбца в админке
+    is_popular.short_description = 'Популярный'
+    # Вот настройка, заменяющая False/True на иконки в админке
+    is_popular.boolean = True
 
 
 class Answer(models.Model):
