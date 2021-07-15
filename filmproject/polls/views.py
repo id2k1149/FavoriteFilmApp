@@ -2,7 +2,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.views.generic import ListView, DetailView
-from .models import Question
+from .models import Question, Participation
 import datetime
 
 
@@ -34,31 +34,39 @@ def question_detail_view(request, pk):
     })
 
 
-
 def vote(request, poll_id):
     question = get_object_or_404(Question, pk=poll_id)
     if not question.is_active:
         return HttpResponse('Sorry, this question is not actual now')
-    else:
-        if request.POST.get('answer'):
-            try:
-                selected_answer = question.answer_set.get(pk=request.POST['answer'])
-            except (question.answer_set.get(pk=request.POST['answer']).DoesNotExist,
-                    UnicodeEncodeError,
-                    ValueError):
-                return render(request, 'polls/detail.html', {
-                    'question': question,
-                    'error_message': "Invalid answer",
-                })
-            selected_answer.votes += 1
-            selected_answer.save()
-            # return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
-            return HttpResponseRedirect(reverse('polls:best', args=(question.id,)))
-        else:
+
+    participant = Participation()
+    participant.user = request.user
+    participant.question = question
+    if participant.voted_already():
+        return HttpResponse('Вы уже голосовали в этом опросе')
+
+    if request.POST.get('answer'):
+        try:
+            selected_answer = question.answer_set.get(pk=request.POST['answer'])
+        except (question.answer_set.get(pk=request.POST['answer']).DoesNotExist,
+                UnicodeEncodeError,
+                ValueError):
             return render(request, 'polls/detail.html', {
                 'question': question,
-                'error_message': "Please, choose an answer",
+                'error_message': "Invalid answer",
             })
+        selected_answer.votes += 1
+        selected_answer.save()
+
+        participant.save()
+
+        # return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
+        return HttpResponseRedirect(reverse('polls:best', args=(question.id,)))
+    else:
+        return render(request, 'polls/detail.html', {
+            'question': question,
+            'error_message': "Please, choose an answer",
+        })
 
 
 class ResultsView(DetailView):
