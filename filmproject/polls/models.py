@@ -46,17 +46,17 @@ class Description(models.Model):
         return self.string_desc
 
 
-class Participation(models.Model):
+class Voter(models.Model):
     """Пользователь, участвующий в опросе"""
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="User")
     question = models.ForeignKey(Question, on_delete=models.CASCADE, verbose_name='Question')
 
     def __str__(self):
-        return self.user.name
+        return self.user.username
 
     def voted_already(self):
         """Голосовал ли пользователь в опросе"""
-        user_list = Participation.objects.filter(user=self.user, question=self.question)
+        user_list = Voter.objects.filter(user=self.user, question=self.question)
         return len(user_list) > 0
 
     class Meta:

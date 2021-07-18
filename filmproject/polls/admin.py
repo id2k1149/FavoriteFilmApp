@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Question, Answer, Description, User, Participation
+from .models import Question, Answer, Description, User, Voter
 
 
 # варианты ответа можно будет добавить на той же странице, что и вопрос опроса.
@@ -49,4 +49,4 @@ class ParticipationAdmin(admin.ModelAdmin):
 admin.site.register(Question, QuestionAdmin)
 admin.site.register(Answer)
 admin.site.register(Description)
-admin.site.register(Participation, ParticipationAdmin)
+admin.site.register(Voter, ParticipationAdmin)

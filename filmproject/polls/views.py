@@ -2,7 +2,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.views.generic import ListView, DetailView
-from .models import Question, Participation
+from .models import Question, Voter
 import datetime
 
 
@@ -39,10 +39,10 @@ def vote(request, poll_id):
     if not question.is_active:
         return HttpResponse('Sorry, this question is not actual now')
 
-    participant = Participation()
-    participant.user = request.user
-    participant.question = question
-    if participant.voted_already():
+    voter = Voter()
+    voter.user = request.user
+    voter.question = question
+    if voter.voted_already():
         return HttpResponse('Вы уже голосовали в этом опросе')
 
     if request.POST.get('answer'):
@@ -58,7 +58,7 @@ def vote(request, poll_id):
         selected_answer.votes += 1
         selected_answer.save()
 
-        participant.save()
+        voter.save()
 
         # return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
         return HttpResponseRedirect(reverse('polls:best', args=(question.id,)))
